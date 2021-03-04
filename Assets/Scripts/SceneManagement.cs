@@ -5,10 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class SceneManagement : MonoBehaviour
 {
+    public float delayTime = 2f;
+    public AudioSource backgroundAudio;
+    public AudioSource buttonAudio;
+
     public void StartGame()
     {
-        Debug.Log("Start game");
-        SceneManager.LoadScene("GameScene");
+        backgroundAudio.Stop();
+        buttonAudio.Play();
+        Invoke("DelayedAction", delayTime);
     }
 
     public void QuitGame()
@@ -21,5 +26,11 @@ public class SceneManagement : MonoBehaviour
     {
         Debug.Log("Go to main menu");
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void DelayedAction()
+    {
+        Debug.Log("Start game");
+        SceneManager.LoadScene("GameScene");
     }
 }
