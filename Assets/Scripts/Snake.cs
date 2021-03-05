@@ -70,7 +70,7 @@ public class Snake : MonoBehaviour
         {
             Debug.Log(tail.Count);
 
-            if (tail.Count == 3)
+            if (tail.Count == 5)
             {
                 WinGame();
             }
