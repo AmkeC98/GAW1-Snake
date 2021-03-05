@@ -12,7 +12,16 @@ public class SpawnFood : MonoBehaviour
 
     void Start()
     {
-        InvokeRepeating("Spawn", 3, 4);
+        Spawn();
+    }
+
+    void Update()
+    {
+        GameObject[] foods = GameObject.FindGameObjectsWithTag("Food");
+        if (foods.Length == 0)
+        {
+            Spawn();
+        }
     }
 
     void Spawn()

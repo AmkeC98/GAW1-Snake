@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 public class Snake : MonoBehaviour
 {
     public GameObject tailPrefab;
+    public AudioSource loseSound;
+    public AudioSource movementSound;
 
     Vector2 dir = Vector2.right;
     List<Transform> tail = new List<Transform>();
@@ -37,8 +39,15 @@ public class Snake : MonoBehaviour
         }
     }
 
+    void PlayMovementSound()
+    {
+        movementSound.Play();
+    }
+
     void Move()
     {
+        PlayMovementSound();
+
         // Save current position (gap will be here)
         Vector2 v = transform.position;
 
@@ -84,7 +93,11 @@ public class Snake : MonoBehaviour
         }
         else if (collision.tag.Equals("Wall"))
         {
-            LoseGame();
+            dir = new Vector2(0.0f, 0.0f);
+            DestroySnakeBody();
+            movementSound.Stop();
+            loseSound.Play();
+            Invoke("LoseGame", 1.0f);
         }
     }
 
@@ -99,4 +112,13 @@ public class Snake : MonoBehaviour
         Debug.Log("You lose!");
         SceneManager.LoadScene("LoseScene");
     }
+
+    void DestroySnakeBody()
+    {
+        GameObject[] snakeParts = GameObject.FindGameObjectsWithTag("Snake");
+        for (int i = 0; i < snakeParts.Length; i++)
+        {
+            Destroy(snakeParts[i]);
+        }
+    }    
 }
